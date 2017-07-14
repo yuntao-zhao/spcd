@@ -16,7 +16,7 @@
   <dependencies>
      <dependency>
         <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-ribbon</artifactId>
+        <artifactId>spring-cloud-starter-feign</artifactId>
     </dependency>
     <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -29,6 +29,11 @@
     <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.christy.spcd</groupId>
+        <artifactId>spcd-wsapi</artifactId>
+        <version>${project.version}</version>
     </dependency>
   </dependencies>
 </project>
