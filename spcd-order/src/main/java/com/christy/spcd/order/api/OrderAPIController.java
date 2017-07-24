@@ -2,13 +2,11 @@ package com.christy.spcd.order.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.christy.spcd.wsapi.order.OrderApi;
 
 @RestController
-@RequestMapping("/order")
 public class OrderAPIController implements OrderApi{
 	
 	@Autowired
