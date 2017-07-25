@@ -12,6 +12,7 @@
   	<module>spcd-admin</module>
   	<module>spcd-mobile</module>
     <module>spcd-registry</module>
+    <module>spcd-config</module>
   </modules>
   
   <properties>
