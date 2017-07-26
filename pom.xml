@@ -13,6 +13,7 @@
   	<module>spcd-mobile</module>
     <module>spcd-registry</module>
     <module>spcd-config</module>
+    <module>spcd-gateway</module>
   </modules>
   
   <properties>
