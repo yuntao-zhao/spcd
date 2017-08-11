@@ -9,4 +9,6 @@ public interface OrderApi {
 
 	@RequestMapping("/order/test")
 	String orderTest(@RequestParam("client")String client);
+	@RequestMapping("/order/pay")
+	String pay(@RequestParam("orderId")Integer orderId);
 }

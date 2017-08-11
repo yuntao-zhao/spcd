@@ -1,0 +1,34 @@
+package com.christy.spcd.core.mq;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSON;
+import com.aliyun.openservices.ons.api.Message;
+import com.aliyun.openservices.ons.api.transaction.TransactionStatus;
+
+public abstract class TransactionCheckStrategy<T> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(TransactionCheckStrategy.class);
+	@SuppressWarnings("unchecked")
+	public TransactionStatus check(Message message){
+		T messageBody = null;
+		Class<?> messageType;
+		try {
+			messageType = Class.forName(message.getUserProperties("messageType"));
+			if(messageType.isPrimitive() || messageType == String.class) {
+				messageBody = (T)new String(message.getBody());
+			} else {
+				messageBody = JSON.parseObject(message.getBody(), messageType);
+			}
+			return checkLocalTransaction(messageBody);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error(e.getMessage(),e);
+			return TransactionStatus.Unknow;
+		}
+	}
+
+	public abstract boolean support(ConsumeTag tag);
+	
+	public abstract TransactionStatus checkLocalTransaction(T message);
+	
+}

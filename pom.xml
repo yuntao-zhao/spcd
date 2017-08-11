@@ -14,12 +14,15 @@
     <module>spcd-registry</module>
     <module>spcd-config</module>
     <module>spcd-gateway</module>
+    <module>spcd-message</module>
   </modules>
   
   <properties>
     <springboot.version>1.5.3.RELEASE</springboot.version>
     <slf4j.version>1.7.21</slf4j.version>
     <httpclient.version>4.5</httpclient.version>
+    <rocketmq.version>1.6.0.Final</rocketmq.version>
+    <fastjson.version>1.2.3</fastjson.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -45,6 +48,18 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
+        </dependency>
+        
+        <dependency>
+		    <groupId>com.aliyun.openservices</groupId>
+		   <artifactId>ons-client</artifactId>
+		   <version>${rocketmq.version}</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 	 </dependencies>
   </dependencyManagement>

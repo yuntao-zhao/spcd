@@ -10,4 +10,9 @@ public class OrderAPIHystrix implements OrderApi{
 		return "出错了啊啊啊啊";
 	}
 
+	@Override
+	public String pay(Integer orderId) {
+		return "支付失败，请稍后再试";
+	}
+
 }
