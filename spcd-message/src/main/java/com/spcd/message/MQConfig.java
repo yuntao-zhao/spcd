@@ -7,21 +7,22 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import com.christy.spcd.core.mq.ConsumeSpec;
 import com.christy.spcd.core.mq.ConsumeTag;
 import com.christy.spcd.core.mq.ConsumerId;
 import com.christy.spcd.core.mq.DefaultMQConfig;
-import com.christy.spcd.core.mq.MQConsumerFactory;
+import com.christy.spcd.core.mq.MQConsumerBuilder;
 import com.spcd.message.common.listener.OrderPaidSucceedMessageListener;
 @Configuration
 public class MQConfig extends DefaultMQConfig{
 	
 	@Bean
-	public MQConsumerFactory mqConsumerFactory(){
+	public Consumer mqConsumer(){
 		Properties properties = mqProperties();
 		properties.put(PropertyKeyConst.ConsumerId, consumerId().name());
-		return new MQConsumerFactory(springFactory,properties,registerConsumeTags());
+		return new MQConsumerBuilder(springFactory,properties,registerConsumeTags()).build();
 	}
 
 	@Override
