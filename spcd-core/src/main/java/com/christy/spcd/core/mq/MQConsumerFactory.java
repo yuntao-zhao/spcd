@@ -6,7 +6,9 @@ import java.util.Properties;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.InitializingBean;
 
+import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.MessageListener;
+import com.aliyun.openservices.ons.api.ONSFactory;
 import com.christy.spcd.core.SpringFactory;
 
 public class MQConsumerFactory implements InitializingBean{
@@ -27,10 +29,10 @@ public class MQConsumerFactory implements InitializingBean{
 	public void createConsumer(){
 		if(CollectionUtils.isNotEmpty(consumeSpecs)){
 			for (ConsumeSpec consumeSpec : consumeSpecs) {
-				MQConsumer consumerBean = new MQConsumer();
-				consumerBean.setProperties(properties);
+				Consumer consumer = ONSFactory.createConsumer(properties);
 				MessageListener messageListener = springFactory.getOrCreateBean(consumeSpec.getMessageListenerCls());
-				consumerBean.subscribe(consumeSpec.getTag().getTopic(), consumeSpec.getTag().name(), messageListener);
+				consumer.subscribe(consumeSpec.getTag().getTopic(), consumeSpec.getTag().name(), messageListener);
+				consumer.start();
 			}
 		}
 	}

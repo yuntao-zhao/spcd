@@ -5,9 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.aliyun.openservices.ons.api.Message;
+import com.aliyun.openservices.ons.api.transaction.LocalTransactionExecuter;
 import com.aliyun.openservices.ons.api.transaction.TransactionStatus;
 
-public abstract class TransactionCheckStrategy<T> {
+public abstract class TransactionCheckStrategy<T> implements LocalTransactionExecuter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TransactionCheckStrategy.class);
 	@SuppressWarnings("unchecked")
 	public TransactionStatus check(Message message){
@@ -21,7 +22,7 @@ public abstract class TransactionCheckStrategy<T> {
 				messageBody = JSON.parseObject(message.getBody(), messageType);
 			}
 			return checkLocalTransaction(messageBody);
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			LOGGER.error(e.getMessage(),e);
 			return TransactionStatus.Unknow;
 		}

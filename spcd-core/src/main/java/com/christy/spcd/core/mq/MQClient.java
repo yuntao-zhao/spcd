@@ -11,7 +11,7 @@ import org.springframework.beans.factory.InitializingBean;
 import com.alibaba.fastjson.JSON;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
-import com.aliyun.openservices.ons.api.SendResult;
+import com.aliyun.openservices.ons.api.transaction.LocalTransactionExecuter;
 import com.aliyun.openservices.ons.api.transaction.TransactionProducer;
 
 public class MQClient implements InitializingBean,DisposableBean {
@@ -27,10 +27,24 @@ public class MQClient implements InitializingBean,DisposableBean {
 		this.transactionProducer = transactionProducer;
 	}
 	
-	public SendResult sendMessage(ConsumeTag tag,Object body,String key){
+	public MQSendResult sendMessage(ConsumeTag tag,Object body,String key){
 		try{
 			Message message = wrapMessage(tag, body, key);
-			return producer.send(message);
+			MQSendResult result =  MQSendResult.convert(producer.send(message));
+			LOGGER.info("MQ send result  {}",JSON.toJSON(result));
+			return result;
+		}catch (Exception e){
+			LOGGER.error(e.getMessage(),e);
+		}
+		return null;
+	}
+	
+	public MQSendResult sendTransactionMessage(ConsumeTag tag,Object body,String key,LocalTransactionExecuter executer,Object arg){
+		try{
+			Message message = wrapMessage(tag, body, key);
+			MQSendResult result = MQSendResult.convert(transactionProducer.send(message, executer, arg));
+			LOGGER.info("MQ send result  {}",JSON.toJSON(result));
+			return result;
 		}catch (Exception e){
 			LOGGER.error(e.getMessage(),e);
 		}
@@ -47,8 +61,8 @@ public class MQClient implements InitializingBean,DisposableBean {
 		}
 		key = topic + "_" + tag.name() + "_" + key;
 		Message message = new Message(topic,tag.name(),key,byteBody);
-//		message.putUserProperties("messageType", body.getClass().getName());
-//		message.putUserProperties("_uuid", System.nanoTime() + UUID.randomUUID().toString().replaceAll("-", ""));
+		message.putUserProperties("messageType", body.getClass().getName());
+		message.putUserProperties("_uuid", System.nanoTime() + UUID.randomUUID().toString().replaceAll("-", ""));
 		return message;
 	}
 	

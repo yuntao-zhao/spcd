@@ -15,4 +15,9 @@ public class OrderAPIHystrix implements OrderApi{
 		return "支付失败，请稍后再试";
 	}
 
+	@Override
+	public String pay2(Integer orderId) {
+		return "支付失败，请稍后再试";
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import com.christy.spcd.core.mq.ConsumeSpec;
@@ -13,7 +14,7 @@ import com.christy.spcd.core.mq.ConsumerId;
 import com.christy.spcd.core.mq.DefaultMQConfig;
 import com.christy.spcd.core.mq.MQConsumerFactory;
 import com.spcd.message.common.listener.OrderPaidSucceedMessageListener;
-
+@Configuration
 public class MQConfig extends DefaultMQConfig{
 	
 	@Bean

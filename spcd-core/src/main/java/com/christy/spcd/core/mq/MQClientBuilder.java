@@ -2,9 +2,10 @@ package com.christy.spcd.core.mq;
 
 import java.util.Properties;
 
-import com.aliyun.openservices.ons.api.bean.ProducerBean;
-import com.aliyun.openservices.ons.api.bean.TransactionProducerBean;
+import com.aliyun.openservices.ons.api.ONSFactory;
+import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.transaction.LocalTransactionChecker;
+import com.aliyun.openservices.ons.api.transaction.TransactionProducer;
 import com.christy.spcd.core.SpringFactory;
 
 public class MQClientBuilder {
@@ -17,16 +18,13 @@ public class MQClientBuilder {
 	}
 	
 	public MQClient build(){
-		ProducerBean producerBean = new ProducerBean();
-		TransactionProducerBean transactionProducerBean = new TransactionProducerBean();
-		producerBean.setProperties(properties);
-		transactionProducerBean.setProperties(properties);
-		transactionProducerBean.setLocalTransactionChecker(localTransactionChecker());
-		return new MQClient(producerBean, transactionProducerBean);
+		Producer producer =ONSFactory.createProducer(properties);
+		TransactionProducer transactionProducer = ONSFactory.createTransactionProducer(properties,localTransactionChecker());
+		return new MQClient(producer, transactionProducer);
 	}
 	
 	private LocalTransactionChecker localTransactionChecker(){
-		LocalTransactionChecker checker = new DefaultTransactionChecker();
+		DefaultTransactionChecker checker = new DefaultTransactionChecker();
 		springFactory.initializeBean(checker);
 		return checker;
 	}

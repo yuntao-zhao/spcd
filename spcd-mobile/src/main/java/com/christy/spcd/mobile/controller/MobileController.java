@@ -1,7 +1,6 @@
 package com.christy.spcd.mobile.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +14,7 @@ import com.christy.spcd.wsapi.order.OrderApi;
 public class MobileController {
 	@Autowired
 	private OrderApi orderApi;
-	@Value("${version}")
+//	@Value("${version}")
 	private String version;
 
 	@RequestMapping("/hello")
@@ -31,5 +30,9 @@ public class MobileController {
 	@RequestMapping("/pay")
 	public String pay(@RequestParam("orderId")Integer orderId){
 		return orderApi.pay(orderId);
+	}
+	@RequestMapping("/pay2")
+	public String pay2(@RequestParam("orderId")Integer orderId){
+		return orderApi.pay2(orderId);
 	}
 }
