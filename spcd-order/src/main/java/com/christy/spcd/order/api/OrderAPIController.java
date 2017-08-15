@@ -31,7 +31,7 @@ public class OrderAPIController implements OrderApi{
 	public String pay(Integer orderId) {
 		MQSendResult result = mqClient.sendMessage(ConsumeTag.ORDER_PAID_SUCCEED, new OrderPaidSucceedMessage(orderId), String.valueOf(orderId));
 		if(result == null){
-			return "发送失败了";
+			return "支付失败了";
 		}
 		return result.getMessageId();
 	}
@@ -40,7 +40,7 @@ public class OrderAPIController implements OrderApi{
 	public String pay2(Integer orderId) {
 		MQSendResult result = mqClient.sendTransactionMessage(ConsumeTag.ORDER_PAID_SUCCEED, new OrderPaidSucceedMessage(orderId), String.valueOf(orderId),orderPaidTransactionExecuter,orderId);
 		if(result == null){
-			return "发送失败了";
+			return "支付失败了";
 		}
 		
 		return result.getMessageId();
