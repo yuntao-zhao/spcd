@@ -26,7 +26,13 @@ public class MQClient implements InitializingBean,DisposableBean {
 		this.producer = producer;
 		this.transactionProducer = transactionProducer;
 	}
-	
+	/**
+	 * 发送普通消息
+	 * @param tag
+	 * @param body
+	 * @param key
+	 * @return
+	 */
 	public MQSendResult sendMessage(ConsumeTag tag,Object body,String key){
 		try{
 			Message message = wrapMessage(tag, body, key);
@@ -39,6 +45,15 @@ public class MQClient implements InitializingBean,DisposableBean {
 		return null;
 	}
 	
+	/**
+	 * 发送事务消息
+	 * @param tag
+	 * @param body
+	 * @param key
+	 * @param executer
+	 * @param arg
+	 * @return
+	 */
 	public MQSendResult sendTransactionMessage(ConsumeTag tag,Object body,String key,LocalTransactionExecuter executer,Object arg){
 		try{
 			Message message = wrapMessage(tag, body, key);

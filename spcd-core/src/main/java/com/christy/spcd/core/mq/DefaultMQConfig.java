@@ -16,9 +16,8 @@ public abstract class DefaultMQConfig implements ApplicationContextAware{
 
 	public Properties mqProperties(){
 		Properties properties = new Properties();
-//		properties.put(PropertyKeyConst.ONSAddr, "http://onsaddr-internal.aliyun.com:8080/rocketmq/nsaddr4client-internal");
-		properties.put(PropertyKeyConst.AccessKey, "AccessKey");
-		properties.put(PropertyKeyConst.SecretKey, "SecretKey");
+		properties.put(PropertyKeyConst.AccessKey, "在阿里云后台创建的AccessKey");
+		properties.put(PropertyKeyConst.SecretKey, "在阿里云后台创建的AccessSecretKey");
 		return properties;
 	}
 
