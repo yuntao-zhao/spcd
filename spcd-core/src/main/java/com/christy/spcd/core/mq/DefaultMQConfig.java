@@ -25,9 +25,9 @@ public abstract class DefaultMQConfig implements ApplicationContextAware{
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.springFactory = applicationContext.getBean(SpringFactory.class);
 	}
-	
+
 	public abstract List<ConsumeSpec> registerConsumeTags();
-	
+
 	protected ProducerId producerId() {
 		return null;
 	}

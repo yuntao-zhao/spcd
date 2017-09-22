@@ -13,16 +13,16 @@ import com.christy.spcd.core.mq.ConsumeSpec;
 import com.christy.spcd.core.mq.ConsumeTag;
 import com.christy.spcd.core.mq.ConsumerId;
 import com.christy.spcd.core.mq.DefaultMQConfig;
-import com.christy.spcd.core.mq.MQConsumerBuilder;
+import com.christy.spcd.core.mq.MQConsumerFactory;
 import com.spcd.message.common.listener.OrderPaidSucceedMessageListener;
 @Configuration
 public class MQConfig extends DefaultMQConfig{
 	
 	@Bean
-	public Consumer mqConsumer(){
+	public MQConsumerFactory mqConsumer(){
 		Properties properties = mqProperties();
 		properties.put(PropertyKeyConst.ConsumerId, consumerId().name());
-		return new MQConsumerBuilder(springFactory,properties,registerConsumeTags()).build();
+		return new MQConsumerFactory(properties,registerConsumeTags());
 	}
 
 	@Override
