@@ -19,7 +19,7 @@ import com.spcd.message.common.listener.OrderPaidSucceedMessageListener;
 public class MQConfig extends DefaultMQConfig{
 	
 	@Bean
-	public MQConsumerFactory mqConsumer(){
+	public MQConsumerFactory mqConsumerFactory (){
 		Properties properties = mqProperties();
 		properties.put(PropertyKeyConst.ConsumerId, consumerId().name());
 		return new MQConsumerFactory(properties,registerConsumeTags());
